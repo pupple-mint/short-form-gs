@@ -1,20 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  Box, 
-  Button, 
-  IconButton, 
-  Slider, 
-  Typography,
-  Container,
-  Paper
-} from '@mui/material';
-import { 
-  PlayArrow, 
-  Pause, 
-  Favorite, 
-  FavoriteBorder,
-  CloudUpload 
-} from '@mui/icons-material';
+import { PlayIcon, PauseIcon, HeartIcon, HeartOutlineIcon, UploadIcon } from './components/Icons';
 import './App.css';
 
 function App() {
@@ -49,21 +34,33 @@ function App() {
 
   const handleTimeUpdate = () => {
     if (videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
+      const current = videoRef.current.currentTime;
+      setCurrentTime(current);
+      updateSliderProgress(current, duration);
     }
   };
 
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
-      setDuration(videoRef.current.duration);
+      const dur = videoRef.current.duration;
+      setDuration(dur);
+      updateSliderProgress(currentTime, dur);
     }
   };
 
-  const handleSeek = (event: Event, newValue: number | number[]) => {
-    const time = newValue as number;
+  const handleSeek = (event: Event | React.ChangeEvent<HTMLInputElement>, newValue: number | number[]) => {
+    const time = typeof newValue === 'number' ? newValue : newValue[0];
     if (videoRef.current) {
       videoRef.current.currentTime = time;
       setCurrentTime(time);
+    }
+  };
+
+  const updateSliderProgress = (current: number, total: number) => {
+    const progress = total > 0 ? (current / total) * 100 : 0;
+    const slider = document.querySelector('.video-slider') as HTMLElement;
+    if (slider) {
+      slider.style.setProperty('--progress', `${progress}%`);
     }
   };
 
@@ -78,34 +75,27 @@ function App() {
   };
 
   return (
-    <Container maxWidth="sm" className="main-container">
-      <Box className="content-wrapper">
+    <div className="main-container">
+      <div className="content-wrapper">
         {!videoSrc ? (
-          <Paper 
-            elevation={3}
-            className="upload-paper"
-          >
-            <CloudUpload className="upload-icon" />
-            <Typography variant="h5" gutterBottom>
+          <div className="upload-paper">
+            <UploadIcon size={60} className="upload-icon" />
+            <h2 className="upload-title">
               동영상 업로드
-            </Typography>
-            <Typography variant="body1" className="upload-description">
+            </h2>
+            <p className="upload-description">
               숏폼 동영상을 선택해주세요
-            </Typography>
-            <Button
-              variant="contained"
+            </p>
+            <button
               onClick={handleUploadClick}
               className="upload-button"
             >
               동영상 선택
-            </Button>
-          </Paper>
+            </button>
+          </div>
         ) : (
-          <Paper 
-            elevation={6}
-            className="video-paper"
-          >
-            <Box className="video-container">
+          <div className="video-paper">
+            <div className="video-container">
               <video
                 ref={videoRef}
                 src={videoSrc}
@@ -116,54 +106,54 @@ function App() {
               />
               
               {/* Like Button - Bottom Right */}
-              <IconButton
+              <button
                 onClick={() => setIsLiked(!isLiked)}
                 className={`like-button ${isLiked ? 'liked' : ''}`}
               >
-                {isLiked ? <Favorite /> : <FavoriteBorder />}
-              </IconButton>
+                {isLiked ? <HeartIcon size={29} /> : <HeartOutlineIcon size={29} />}
+              </button>
 
               {/* Video Controls */}
-              <Box className="video-controls">
-                <Box className="controls-row">
-                  <IconButton
+              <div className="video-controls">
+                <div className="controls-row">
+                  <button
                     onClick={togglePlayPause}
                     className="play-button"
                   >
-                    {isPlaying ? <Pause /> : <PlayArrow />}
-                  </IconButton>
+                    {isPlaying ? <PauseIcon size={24} /> : <PlayIcon size={24} />}
+                  </button>
                   
-                  <Typography variant="caption" className="time-display">
+                  <span className="time-display">
                     {formatTime(currentTime)}
-                  </Typography>
+                  </span>
                   
-                  <Slider
+                  <input
+                    type="range"
                     value={currentTime}
                     max={duration}
-                    onChange={handleSeek}
+                    onChange={(e) => handleSeek(e as any, Number(e.target.value))}
                     className="video-slider"
                   />
                   
-                  <Typography variant="caption" className="time-display">
+                  <span className="time-display">
                     {formatTime(duration)}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          </Paper>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
         {videoSrc && (
-          <Box className="new-upload-section">
-            <Button
-              variant="outlined"
+          <div className="new-upload-section">
+            <button
               onClick={handleUploadClick}
-              startIcon={<CloudUpload />}
               className="new-upload-button"
             >
-              새 동영상 업로드
-            </Button>
-          </Box>
+              <UploadIcon size={16} />
+              <span>새 동영상 업로드</span>
+            </button>
+          </div>
         )}
 
         <input
@@ -173,8 +163,8 @@ function App() {
           onChange={handleFileUpload}
           className="hidden-input"
         />
-      </Box>
-    </Container>
+      </div>
+    </div>
   );
 }
 

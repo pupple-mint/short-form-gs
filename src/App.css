@@ -21,10 +21,17 @@ body {
 }
 
 /* 모바일 터치 최적화 */
-button, input[type="file"] {
+button, input[type="file"], input[type="range"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* 비디오 요소 최적화 */
@@ -65,14 +72,6 @@ video {
   }
 }
 
-/* 터치 피드백 개선 */
-.touch-feedback {
-  transition: transform 0.1s ease;
-}
-
-.touch-feedback:active {
-  transform: scale(0.95);
-}
 
 /* Custom scrollbar for webkit browsers */
 ::-webkit-scrollbar {
@@ -93,10 +92,6 @@ video {
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Smooth transitions for all interactive elements */
-button, input[type="range"] {
-  transition: all 0.2s ease;
-}
 
 /* Custom focus styles */
 button:focus-visible {
@@ -105,182 +100,273 @@ button:focus-visible {
 }
 
 /* Container Styles */
-.main-container.MuiContainer-root {
-  min-height: 100vh !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-  padding: 16px 8px !important;
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 8px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.content-wrapper.MuiBox-root {
-  width: 100% !important;
-  max-width: 100vw !important;
-  height: 100vh !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
+.content-wrapper {
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Upload Section */
-.upload-paper.MuiPaper-root {
-  padding: 32px !important;
-  text-align: center !important;
-  border-radius: 24px !important;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  color: white !important;
+.upload-paper {
+  padding: 32px;
+  text-align: center;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
 }
 
-.upload-icon.MuiSvgIcon-root {
-  font-size: 60px !important;
-  margin-bottom: 16px !important;
-  opacity: 0.8 !important;
+.upload-icon {
+  margin-bottom: 16px;
+  opacity: 0.8;
 }
 
-.upload-description.MuiTypography-root {
-  margin-bottom: 24px !important;
-  opacity: 0.9 !important;
+.upload-title {
+  font-size: 2.125rem;
+  font-weight: 400;
+  line-height: 1.235;
+  margin: 0 0 16px 0;
+  color: white;
 }
 
-.upload-button.MuiButton-root {
-  background-color: rgba(255,255,255,0.2) !important;
-  backdrop-filter: blur(10px) !important;
-  min-height: 56px !important;
-  font-size: 18px !important;
-  border-radius: 28px !important;
-  padding: 0 32px !important;
+.upload-description {
+  margin-bottom: 24px;
+  opacity: 0.9;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-top: 0;
 }
 
-.upload-button.MuiButton-root:hover {
-  background-color: rgba(255,255,255,0.3) !important;
+.upload-button {
+  background-color: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  min-height: 56px;
+  font-size: 18px;
+  border-radius: 28px;
+  padding: 0 32px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  outline: none;
 }
 
-.upload-button.MuiButton-root:active {
-  transform: scale(0.98) !important;
+.upload-button:hover {
+  background-color: rgba(255,255,255,0.3);
 }
+
 
 /* Video Player */
-.video-paper.MuiPaper-root {
-  position: relative !important;
-  border-radius: 24px !important;
-  overflow: hidden !important;
-  background: #000 !important;
+.video-paper {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0px 10px 13px -6px rgba(0,0,0,0.2), 0px 20px 31px 3px rgba(0,0,0,0.14), 0px 8px 38px 7px rgba(0,0,0,0.12);
 }
 
-.video-container.MuiBox-root {
-  position: relative !important;
+.video-container {
+  position: relative;
 }
 
 .video-element {
-  width: 100% !important;
-  height: 70vh !important;
-  max-height: 600px !important;
-  object-fit: cover !important;
-  display: block !important;
-  touch-action: manipulation !important;
+  width: 100%;
+  height: 70vh;
+  max-height: 600px;
+  object-fit: cover;
+  display: block;
+  touch-action: manipulation;
 }
 
 /* Like Button */
-.like-button.MuiIconButton-root {
-  position: absolute !important;
-  bottom: 100px !important;
-  right: 20px !important;
-  width: 56px !important;
-  height: 56px !important;
-  background-color: rgba(0,0,0,0.6) !important;
-  color: white !important;
-  transition: all 0.2s ease !important;
-  touch-action: manipulation !important;
-}
-
-.like-button.MuiIconButton-root:hover {
-  background-color: rgba(0,0,0,0.8) !important;
-}
-
-.like-button.MuiIconButton-root:active {
-  transform: scale(0.9) !important;
+.like-button {
+  position: absolute;
+  bottom: 75px;
+  right: 20px;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  color: white;
+  padding: 0;
+  border: none;
+  outline: none;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
 .like-button.liked {
-  color: #ff1744 !important;
+  color: #ff1744;
+}
+
+.like-button:focus {
+  outline: none;
+  border: none;
+}
+
+.like-button:hover {
+  background-color: transparent;
 }
 
 /* Video Controls */
-.video-controls.MuiBox-root {
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8)) !important;
-  padding: 16px !important;
+.video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 16px;
 }
 
-.controls-row.MuiBox-root {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  margin-bottom: 8px !important;
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-.play-button.MuiIconButton-root {
-  color: white !important;
-  width: 48px !important;
-  height: 48px !important;
-  touch-action: manipulation !important;
+.play-button {
+  color: white;
+  width: 48px;
+  height: 48px;
+  touch-action: manipulation;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  outline: none;
 }
 
-.play-button.MuiIconButton-root:active {
-  transform: scale(0.9) !important;
+.play-button:hover {
+  background-color: transparent;
 }
 
-.time-display.MuiTypography-root {
-  color: white !important;
-  min-width: 40px !important;
+.time-display {
+  color: white;
+  min-width: 40px;
+  font-size: 0.75rem;
+  font-family: inherit;
 }
 
-.video-slider.MuiSlider-root {
-  color: white !important;
-  height: 8px !important;
-  touch-action: manipulation !important;
+.video-slider {
+  flex: 1;
+  height: 8px;
+  touch-action: manipulation;
+  background: linear-gradient(to right, white 0%, white var(--progress, 0%), rgba(255,255,255,0.3) var(--progress, 0%), rgba(255,255,255,0.3) 100%);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 2px;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
-.video-slider.MuiSlider-root .MuiSlider-thumb {
-  width: 20px !important;
-  height: 20px !important;
+.video-slider::-webkit-slider-track {
+  height: 4px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
 }
 
-.video-slider.MuiSlider-root .MuiSlider-thumb:before {
-  box-shadow: 0 2px 12px 0 rgba(255,255,255,0.4) !important;
+.video-slider::-webkit-slider-progress {
+  height: 4px;
+  background: white;
+  border-radius: 2px;
 }
 
-.video-slider.MuiSlider-root .MuiSlider-track {
-  height: 4px !important;
+.video-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 12px 0 rgba(255,255,255,0.4);
 }
 
-.video-slider.MuiSlider-root .MuiSlider-rail {
-  height: 4px !important;
-  opacity: 0.3 !important;
+.video-slider::-moz-range-track {
+  height: 4px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  border: none;
+}
+
+.video-slider::-moz-range-progress {
+  height: 4px;
+  background: white;
+  border-radius: 2px;
+  border: none;
+}
+
+.video-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 12px 0 rgba(255,255,255,0.4);
 }
 
 /* New Upload Button */
-.new-upload-section.MuiBox-root {
-  margin-top: 24px !important;
-  margin-bottom: 16px !important;
-  text-align: center !important;
+.new-upload-section {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  text-align: center;
 }
 
-.new-upload-button.MuiButton-root {
-  border-radius: 24px !important;
-  min-height: 48px !important;
-  font-size: 16px !important;
-  padding: 0 24px !important;
-  touch-action: manipulation !important;
+.new-upload-button {
+  border-radius: 24px;
+  min-height: 48px;
+  font-size: 16px;
+  padding: 0 24px;
+  touch-action: manipulation;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  outline: none;
 }
 
-.new-upload-button.MuiButton-root:active {
-  transform: scale(0.98) !important;
+.new-upload-button:hover {
+  background-color: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.5);
 }
+
 
 /* Hidden File Input */
 .hidden-input {
