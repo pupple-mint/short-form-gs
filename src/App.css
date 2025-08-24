@@ -1,0 +1,288 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  background-color: #000;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+/* 모바일 터치 최적화 */
+button, input[type="file"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* 비디오 요소 최적화 */
+video {
+  -webkit-playsinline: true;
+  -moz-playsinline: true;
+  playsinline: true;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+/* iOS Safari 안전 영역 대응 */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-top: max(0px, env(safe-area-inset-top));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
+/* 스크롤바 숨기기 */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* 터치 피드백 개선 */
+.touch-feedback {
+  transition: transform 0.1s ease;
+}
+
+.touch-feedback:active {
+  transform: scale(0.95);
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Smooth transitions for all interactive elements */
+button, input[type="range"] {
+  transition: all 0.2s ease;
+}
+
+/* Custom focus styles */
+button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Container Styles */
+.main-container.MuiContainer-root {
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 16px 8px !important;
+}
+
+.content-wrapper.MuiBox-root {
+  width: 100% !important;
+  max-width: 100vw !important;
+  height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* Upload Section */
+.upload-paper.MuiPaper-root {
+  padding: 32px !important;
+  text-align: center !important;
+  border-radius: 24px !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+}
+
+.upload-icon.MuiSvgIcon-root {
+  font-size: 60px !important;
+  margin-bottom: 16px !important;
+  opacity: 0.8 !important;
+}
+
+.upload-description.MuiTypography-root {
+  margin-bottom: 24px !important;
+  opacity: 0.9 !important;
+}
+
+.upload-button.MuiButton-root {
+  background-color: rgba(255,255,255,0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  min-height: 56px !important;
+  font-size: 18px !important;
+  border-radius: 28px !important;
+  padding: 0 32px !important;
+}
+
+.upload-button.MuiButton-root:hover {
+  background-color: rgba(255,255,255,0.3) !important;
+}
+
+.upload-button.MuiButton-root:active {
+  transform: scale(0.98) !important;
+}
+
+/* Video Player */
+.video-paper.MuiPaper-root {
+  position: relative !important;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  background: #000 !important;
+}
+
+.video-container.MuiBox-root {
+  position: relative !important;
+}
+
+.video-element {
+  width: 100% !important;
+  height: 70vh !important;
+  max-height: 600px !important;
+  object-fit: cover !important;
+  display: block !important;
+  touch-action: manipulation !important;
+}
+
+/* Like Button */
+.like-button.MuiIconButton-root {
+  position: absolute !important;
+  bottom: 100px !important;
+  right: 20px !important;
+  width: 56px !important;
+  height: 56px !important;
+  background-color: rgba(0,0,0,0.6) !important;
+  color: white !important;
+  transition: all 0.2s ease !important;
+  touch-action: manipulation !important;
+}
+
+.like-button.MuiIconButton-root:hover {
+  background-color: rgba(0,0,0,0.8) !important;
+}
+
+.like-button.MuiIconButton-root:active {
+  transform: scale(0.9) !important;
+}
+
+.like-button.liked {
+  color: #ff1744 !important;
+}
+
+/* Video Controls */
+.video-controls.MuiBox-root {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8)) !important;
+  padding: 16px !important;
+}
+
+.controls-row.MuiBox-root {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.play-button.MuiIconButton-root {
+  color: white !important;
+  width: 48px !important;
+  height: 48px !important;
+  touch-action: manipulation !important;
+}
+
+.play-button.MuiIconButton-root:active {
+  transform: scale(0.9) !important;
+}
+
+.time-display.MuiTypography-root {
+  color: white !important;
+  min-width: 40px !important;
+}
+
+.video-slider.MuiSlider-root {
+  color: white !important;
+  height: 8px !important;
+  touch-action: manipulation !important;
+}
+
+.video-slider.MuiSlider-root .MuiSlider-thumb {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.video-slider.MuiSlider-root .MuiSlider-thumb:before {
+  box-shadow: 0 2px 12px 0 rgba(255,255,255,0.4) !important;
+}
+
+.video-slider.MuiSlider-root .MuiSlider-track {
+  height: 4px !important;
+}
+
+.video-slider.MuiSlider-root .MuiSlider-rail {
+  height: 4px !important;
+  opacity: 0.3 !important;
+}
+
+/* New Upload Button */
+.new-upload-section.MuiBox-root {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  text-align: center !important;
+}
+
+.new-upload-button.MuiButton-root {
+  border-radius: 24px !important;
+  min-height: 48px !important;
+  font-size: 16px !important;
+  padding: 0 24px !important;
+  touch-action: manipulation !important;
+}
+
+.new-upload-button.MuiButton-root:active {
+  transform: scale(0.98) !important;
+}
+
+/* Hidden File Input */
+.hidden-input {
+  display: none;
+}
