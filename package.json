@@ -2,6 +2,7 @@
   "name": "short-form-gs",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://pupple-mint.github.io/short-form-gs/"
   "dependencies": {
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
