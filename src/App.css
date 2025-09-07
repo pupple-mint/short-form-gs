@@ -234,7 +234,7 @@ button:focus-visible {
   left: 0;
   right: 0;
   background: linear-gradient(transparent, rgba(0,0,0,0.8));
-  padding: 16px;
+  padding: 0 16px 16px 16px;
 }
 
 .controls-row {
@@ -371,4 +371,18 @@ button:focus-visible {
 /* Hidden File Input */
 .hidden-input {
   display: none;
+}
+
+/* 좋아요 아이콘 관련 */
+.heart-icon-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 29px;   /* 아이콘 크기와 동일하게 */
+  height: 29px;
+}
+
+.heart-icon-active {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

@@ -110,7 +110,10 @@ function App() {
                 onClick={() => setIsLiked(!isLiked)}
                 className={`like-button ${isLiked ? 'liked' : ''}`}
               >
-                {isLiked ? <HeartIcon size={29} /> : <HeartOutlineIcon size={29} />}
+                <span className="heart-icon-wrapper">
+                  <HeartOutlineIcon size={29}/>
+                  {isLiked && <HeartIcon size={29} className={`heart-icon-active`} />}
+                </span>
               </button>
 
               {/* Video Controls */}
