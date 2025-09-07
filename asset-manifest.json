@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/short-form-gs/static/css/main.f3ad35cb.css",
+    "main.js": "/short-form-gs/static/js/main.0cc3809a.js",
+    "index.html": "/short-form-gs/index.html",
+    "main.f3ad35cb.css.map": "/short-form-gs/static/css/main.f3ad35cb.css.map",
+    "main.0cc3809a.js.map": "/short-form-gs/static/js/main.0cc3809a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f3ad35cb.css",
+    "static/js/main.0cc3809a.js"
+  ]
+}
