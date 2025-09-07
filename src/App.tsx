@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { PlayIcon, PauseIcon, HeartIcon, HeartOutlineIcon, UploadIcon } from './components/Icons';
 import './App.css';
 
