@@ -111,9 +111,9 @@ function App() {
                 className={`like-button ${isLiked ? 'liked' : ''}`}
               >
                 <span className="heart-icon-wrapper">
-                  <WavyHeartIcon color={isLiked ? '#ff4757' : '#ffffff'} className={`heart-icon ${isLiked ? 'heart-icon-active' : ''}`} />
-                  {/* <HeartOutlineIcon size={29}/> */}
-                  {/* {isLiked && <HeartIcon size={29} className={`heart-icon-active`} />} */}
+                  <WavyHeartIcon
+                    isLiked={isLiked}
+                  />
                 </span>
               </button>
 
