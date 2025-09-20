@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { PlayIcon, PauseIcon, HeartIcon, HeartOutlineIcon, UploadIcon, WavyHeartIcon } from './components/Icons';
+import { PlayIcon, PauseIcon, UploadIcon, WavyHeartIcon } from './components/Icons';
 import './App.css';
 
 function App() {
