@@ -62,6 +62,42 @@ export const HeartOutlineIcon: React.FC<IconProps> = ({ size = 24, color = 'curr
   </svg>
 );
 
+export const WavyHeartIcon: React.FC<IconProps> = ({ size = 29, color = 'currentColor', className }) => {
+  const heartPath = "M50 20 C72.9 0 91.7 20 91.7 40 C91.7 60 50 90 50 90 C50 90 8.3 60 8.3 40 C8.3 20 27.1 0 50 20 Z";
+
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" className={className}>
+      <defs>
+        <clipPath id="revealMask">
+          {/*
+            [수정] path의 높이를 100으로 설정 (y=80에서 y=180까지).
+            이제 이 마스크는 하트 전체를 덮고도 남을 만큼 충분히 커.
+          */}
+          <path
+            id="waveMask" 
+            d="M0 80 Q25 70 50 80 T100 80 L100 180 L0 180 Z" 
+            style={{transform: "translateY(31px)"}} 
+          />
+        </clipPath>
+      </defs>
+
+      <g clipPath="url(#revealMask)">
+        <path 
+          fill={color} 
+          d={heartPath} 
+        />
+      </g>
+      
+      <path 
+        fill="none" 
+        stroke={color} 
+        strokeWidth="10" 
+        d={heartPath} 
+      />
+    </svg>
+  );
+}
+
 export const UploadIcon: React.FC<IconProps> = ({ size = 24, color = 'currentColor', className }) => (
   <svg 
     width={size} 

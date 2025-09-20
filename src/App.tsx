@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { PlayIcon, PauseIcon, HeartIcon, HeartOutlineIcon, UploadIcon } from './components/Icons';
+import { PlayIcon, PauseIcon, HeartIcon, HeartOutlineIcon, UploadIcon, WavyHeartIcon } from './components/Icons';
 import './App.css';
 
 function App() {
@@ -111,8 +111,9 @@ function App() {
                 className={`like-button ${isLiked ? 'liked' : ''}`}
               >
                 <span className="heart-icon-wrapper">
-                  <HeartOutlineIcon size={29}/>
-                  {isLiked && <HeartIcon size={29} className={`heart-icon-active`} />}
+                  <WavyHeartIcon color={isLiked ? '#ff4757' : '#ffffff'} className={`heart-icon ${isLiked ? 'heart-icon-active' : ''}`} />
+                  {/* <HeartOutlineIcon size={29}/> */}
+                  {/* {isLiked && <HeartIcon size={29} className={`heart-icon-active`} />} */}
                 </span>
               </button>
 
