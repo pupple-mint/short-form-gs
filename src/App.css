@@ -372,17 +372,3 @@ button:focus-visible {
 .hidden-input {
   display: none;
 }
-
-/* 좋아요 아이콘 관련 */
-.heart-icon-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 29px;   /* 아이콘 크기와 동일하게 */
-  height: 29px;
-}
-
-.heart-icon-active {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
