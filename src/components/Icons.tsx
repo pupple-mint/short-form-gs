@@ -65,7 +65,7 @@ export const WavyHeartIcon: React.FC<WavyHeartIconProps> = ({ size = 29, classNa
         yoyo: true,
       }, 0);
     }
-  }, [isLiked]);
+  }, [isLiked, tl]);
 
   const heartPath = "M50 20 C72.9 0 91.7 20 91.7 40 C91.7 60 50 90 50 90 C50 90 8.3 60 8.3 40 C8.3 20 27.1 0 50 20 Z";
 
