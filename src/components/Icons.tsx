@@ -77,6 +77,10 @@ export const fireHeartConfetti = (x: number, y: number, count = 20, onReturn?: (
     `;
     document.body.appendChild(el);
 
+    // register element so it can be cleared if needed
+    activeConfetti.add(el);
+    activeConfettiCount++;
+
     // 좌측 상단(targetX,targetY) 방향으로 각도 계산, 스프레드는 넉넉히
     // 고정 발사 각도 + 스프레드로 제어 (음수는 위쪽 방향)
     const DESIRED_ANGLE = -120; // 원하는 발사 각도(도)
@@ -88,8 +92,16 @@ export const fireHeartConfetti = (x: number, y: number, count = 20, onReturn?: (
     const returnDuration = 0.6; // 복귀 지속시간
 
     const pTl = gsap.timeline({
-      onComplete: () => el.remove(),
+      onComplete: () => {
+        try { if (el.parentNode) el.parentNode.removeChild(el); } catch {}
+        try { activeConfetti.delete(el); } catch {}
+        try { confettiTimelines.delete(el); } catch {}
+        try { activeConfettiCount = Math.max(0, activeConfettiCount - 1); } catch {}
+      },
     });
+
+    // keep timeline reference so it can be killed
+    try { confettiTimelines.set(el, pTl); } catch {}
 
     // 1) 발사(physics)
     pTl.to(el, {
@@ -136,6 +148,29 @@ export const fireHeartConfetti = (x: number, y: number, count = 20, onReturn?: (
   }
 };
 
+// Track active confetti elements and their timelines so they can be cancelled immediately
+const activeConfetti = new Set<HTMLElement>();
+const confettiTimelines = new Map<HTMLElement, gsap.core.Timeline>();
+let activeConfettiCount = 0;
+
+export const clearHeartConfetti = () => {
+  try {
+    confettiTimelines.forEach((tl, el) => {
+      try { tl.kill(); } catch {}
+      try { gsap.killTweensOf(el); } catch {}
+      try { if (el.parentNode) el.parentNode.removeChild(el); } catch {}
+    });
+  } catch {}
+  try {
+    activeConfetti.forEach(el => {
+      try { if (el.parentNode) el.parentNode.removeChild(el); } catch {}
+    });
+  } catch {}
+  confettiTimelines.clear();
+  activeConfetti.clear();
+  activeConfettiCount = 0;
+};
+
 export const WavyHeartIcon: React.FC<WavyHeartIconProps> = ({ size = 29, className, timeline = null, isLiked = false}) => {
   const svgRef = useRef<SVGSVGElement|null>(null);
   const prevLikedRef = useRef<boolean>(isLiked);
@@ -143,19 +178,49 @@ export const WavyHeartIcon: React.FC<WavyHeartIconProps> = ({ size = 29, classNa
   const [color, setColor] = useState(isLiked ? '#ff4757' : '#ffffff');
   useEffect(() => {
     const wasLiked = prevLikedRef.current;
+
+    // If user unliked while confetti/like animation is still active, immediately cancel everything
+    if (!isLiked && wasLiked && activeConfettiCount > 0) {
+      // remove confetti immediately, but play the unlike wave animation and set color after it finishes
+      try { clearHeartConfetti(); } catch {}
+      try { tl.clear(); } catch {}
+      const cancelTargetY = 5;
+      try {
+        tl.to("#waveMask", {
+          translateY: cancelTargetY,
+          duration: 1.6,
+          ease: "power2.inOut",
+          onComplete: () => {
+            setColor('#fff');
+          }
+        });
+        tl.fromTo("#waveMask", {translateX: -12}, {
+          translateX: 12,
+          duration: 0.2,
+          ease: "power2.inOut",
+          repeat: 8,
+          yoyo: true,
+        }, 0);
+      } catch {}
+      prevLikedRef.current = isLiked;
+      return;
+    }
+
     const currentY = gsap.getProperty("#waveMask", "translateY");
     const targetY = isLiked ? -70 : 5;
 
     if (!wasLiked && isLiked) {
-      // 좋아요로 전환된 경우: 컨페티 발사, 복귀 시 물채우기 시작
+      // 좋아요로 전환된 경우: confetti가 복귀를 시작할 때 색상 변경 및 물채우기 애니메이션 시작
+
       if (svgRef.current) {
         const rect = svgRef.current.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
         try {
           fireHeartConfetti(cx, cy, 20, () => {
-            try { tl.clear(); } catch {}
+            // confetti가 하트로 모이기 시작할 때 실행: 색상 변경 후 애니메이션 시작
             setColor('#ff4757');
+            try { tl.clear(); } catch {}
             tl.to("#waveMask", {
               translateY: targetY,
               duration: 1.6,
@@ -176,6 +241,27 @@ export const WavyHeartIcon: React.FC<WavyHeartIconProps> = ({ size = 29, classNa
             }, 0);
           });
         } catch{}
+      } else {
+        // svgRef가 없으면 즉시 색상 변경 및 애니메이션 시작
+        setColor('#ff4757');
+        try { tl.clear(); } catch {}
+        tl.to("#waveMask", {
+          translateY: targetY,
+          duration: 1.6,
+          ease: "power2.inOut",
+          onComplete: () => {
+            if (!isLiked) {
+              setColor('#fff');
+            }
+          }
+        });
+        tl.fromTo("#waveMask", {translateX: -12}, {
+          translateX: 12,
+          duration: 0.2,
+          ease: "power2.inOut",
+          repeat: 8,
+          yoyo: true,
+        }, 0);
       }
     } else {
       // 좋아요 해제 또는 기타 경우: 즉시 웨이브 애니메이션 실행
